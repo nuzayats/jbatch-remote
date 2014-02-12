@@ -1,0 +1,5 @@
+FugeEntity:
+  - id: 1
+    fuge: FugeModified
+  - id: 2
+    fuge: FugeFuge

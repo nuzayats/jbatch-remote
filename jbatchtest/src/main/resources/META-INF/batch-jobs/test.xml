@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="test" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+    <step id="fugeUpdate">
+        <batchlet ref="fugeUpdateBatchlet"/>
+    </step>
+</job>
