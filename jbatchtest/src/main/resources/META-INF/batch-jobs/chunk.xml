@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="chunk" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+    <step id="doChunk">
+        <chunk item-count="3">
+        	<reader ref="chunkItemReader"/>
+        	<processor ref="chunkItemProcessor">
+        		<properties>
+        			<property name="divide" value="#{jobParameters['divide']}"/>
+        		</properties>
+        	</processor>
+        	<writer ref="chunkItemWriter"/>
+        </chunk>
+    </step>
+</job>
