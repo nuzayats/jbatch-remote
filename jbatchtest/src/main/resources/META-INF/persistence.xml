@@ -3,7 +3,6 @@
 	<persistence-unit name="jbatchtest">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/jdbc/JBatchTestDS</jta-data-source>
-		<class>org.nailedtothex.jbatch.example.test.FugeEntity</class>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 		</properties>
