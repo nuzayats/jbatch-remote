@@ -20,7 +20,7 @@ public class TestJobTest extends AbstractJobTest{
 	
 	@Test
 	@UsingDataSet("common/fugeentity.yml")
-	@ShouldMatchDataSet(value = "datasets/job/test/expected.yml", orderBy = "id")
+	@ShouldMatchDataSet(value = "job/test/expected.yml", orderBy = "id")
 	public void test() throws Exception {
 		BatchStatus status = startJob("test", new Properties()).getBatchStatus();
 		assertThat(status, is(BatchStatus.COMPLETED));
