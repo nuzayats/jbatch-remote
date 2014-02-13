@@ -35,6 +35,11 @@ public abstract class AbstractJobTest {
 		return waitForFinish(executionId);
 	}
 
+	protected JobExecution restartJob(long executionId, Properties restartParameters) {
+		long newExecutionId = jobOperator.restart(executionId, restartParameters);
+		return waitForFinish(newExecutionId);
+	}
+	
 	private JobExecution waitForFinish(long executionId) {
 		JobExecution jobExecution = null;
 		do {

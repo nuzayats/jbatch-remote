@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="aric" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+	
+	<step id="step1" next="step2" allow-start-if-complete="true">
+		<batchlet ref="exceptionBatchlet"/>
+	</step>
+	
+	<step id="step2" next="step3">
+		<batchlet ref="exceptionBatchlet"/>
+	</step>
+	
+	<step id="step3">
+		<batchlet ref="exceptionBatchlet">
+			<properties>
+				<property name="exception" value="#{jobParameters['failAtStep3']}" />
+			</properties>
+		</batchlet>
+	</step>
+	
+</job>
