@@ -34,7 +34,7 @@ public class ChunkJDBCItemReader implements ItemReader {
 		log.log(Level.FINE, "open(): checkpoint={0}, index starts at={1}", new Object[] { checkpoint, index });
 
 		cn = dataSource.getConnection();
-		ps = cn.prepareStatement("SELECT id, input, processed FROM chunkinputitem OFFSET ?",
+		ps = cn.prepareStatement("SELECT id, input, processed FROM chunkinputitem ORDER BY id OFFSET ?",
 				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 		ps.setFetchSize(3);
 		ps.setInt(1, index);
