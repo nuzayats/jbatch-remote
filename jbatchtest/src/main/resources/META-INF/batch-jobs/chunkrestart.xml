@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="chunkrestart" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+    <step id="doChunk">
+        <chunk item-count="3">
+        	<reader ref="chunkRestartItemReader">
+        		<properties>
+        			<property name="failAt" value="#{jobParameters['itemReaderFailAt']}"/>
+        		</properties>
+        	</reader>
+        	<processor ref="chunkRestartItemProcessor">
+        		<properties>
+        			<property name="divide" value="#{jobParameters['divide']}"/>
+        		</properties>
+        	</processor>
+        	<writer ref="chunkRestartItemWriter"/>
+        </chunk>
+    </step>
+</job>
