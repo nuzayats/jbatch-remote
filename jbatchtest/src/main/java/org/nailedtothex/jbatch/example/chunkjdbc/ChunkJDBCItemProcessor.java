@@ -1,4 +1,4 @@
-package org.nailedtothex.jbatch.example.chunk;
+package org.nailedtothex.jbatch.example.chunkjdbc;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,22 +9,25 @@ import javax.batch.api.chunk.ItemProcessor;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named
-public class ChunkItemProcessor implements ItemProcessor {
+import org.nailedtothex.jbatch.example.chunk.ChunkInputItem;
+import org.nailedtothex.jbatch.example.chunk.ChunkOutputItem;
 
-	private static final Logger log = Logger.getLogger(ChunkItemProcessor.class.getName());
+@Named
+public class ChunkJDBCItemProcessor implements ItemProcessor {
+
+	private static final Logger log = Logger.getLogger(ChunkJDBCItemProcessor.class.getName());
 
 	@Inject
 	@BatchProperty
 	private String divide;
 	private int iDivide;
-	
+
 	@PostConstruct
-	void init(){
-		log.log(Level.FINE, "chunkItemProcessor#postConstruct(): divide={0}", divide);
+	void init() {
+		log.log(Level.FINE, "postConstruct(): divide={0}", divide);
 		iDivide = Integer.parseInt(divide);
 	}
-	
+
 	@Override
 	public Object processItem(Object item) throws Exception {
 		ChunkInputItem chunkInputItem = (ChunkInputItem) item;
@@ -33,8 +36,8 @@ public class ChunkItemProcessor implements ItemProcessor {
 		chunkOutputItem.setId(chunkInputItem.getId());
 		chunkOutputItem.setResult(chunkInputItem.getInput() / iDivide);
 
-		log.log(Level.FINE, "chunkItemProcessor#processItem(): input={0}, output={1}", new Object[]{chunkInputItem, chunkOutputItem});
-		
+		log.log(Level.FINE, "processItem(): input={0}, output={1}", new Object[] { chunkInputItem, chunkOutputItem });
+
 		return chunkOutputItem;
 	}
 }
