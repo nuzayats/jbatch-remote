@@ -1,9 +1,12 @@
 package job.util;
 
+import java.util.EnumSet;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.batch.operations.JobOperator;
+import javax.batch.runtime.BatchStatus;
 import javax.batch.runtime.JobExecution;
 
 import job.test.TestJobTest;
@@ -17,6 +20,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 public abstract class AbstractJobTest {
 	private static final String JNDI_NAME = "java:global/jbatchtest/MyJobOperatorImpl!javax.batch.operations.JobOperator";
 	private static final long POLLING_WAIT = 1000l;
+	private static final Set<BatchStatus> INCOMPLETE_STATUSES = EnumSet.of(BatchStatus.STARTED, BatchStatus.STARTING);
 
 	@Resource(lookup = JNDI_NAME)
 	protected JobOperator jobOperator;
@@ -49,7 +53,7 @@ public abstract class AbstractJobTest {
 				throw new RuntimeException(e);
 			}
 			jobExecution = jobOperator.getJobExecution(executionId);
-		} while (jobExecution.getEndTime() == null);
+		} while (INCOMPLETE_STATUSES.contains(jobExecution.getBatchStatus()));
 		return jobExecution;
 	}
 }
