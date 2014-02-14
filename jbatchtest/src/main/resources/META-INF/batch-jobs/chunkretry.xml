@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="chunkretry" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+	<step id="doChunk">
+		<listeners>
+			<listener ref="myRetryReadListener" />
+		</listeners>
+		<chunk item-count="3" retry-limit="10">
+			<reader ref="chunkRetryItemReader">
+				<properties>
+					<property name="failAt" value="#{jobParameters['itemReaderFailAt']}" />
+					<property name="fails" value="#{jobParameters['itemReaderFails']}" />
+				</properties>
+			</reader>
+			<processor ref="chunkRetryItemProcessor">
+				<properties>
+					<property name="divide" value="#{jobParameters['divide']}" />
+				</properties>
+			</processor>
+			<writer ref="chunkRetryItemWriter" />
+			<retryable-exception-classes>
+				<include class="java.lang.RuntimeException" />
+			</retryable-exception-classes>
+		</chunk>
+	</step>
+</job>
