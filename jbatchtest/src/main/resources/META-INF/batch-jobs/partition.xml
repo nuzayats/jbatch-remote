@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="partition" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+	<step id="doChunk">
+		<chunk item-count="3">
+			<reader ref="partitionItemReader">
+				<properties>
+					<property name="failAt" value="#{jobParameters['itemReaderFailAt']}" />
+					<property name="partitions" value="#{jobParameters['partitions']}" />
+					<property name="partitionNumber" value="#{partitionPlan['partitionNumber']}" />
+				</properties>
+			</reader>
+			<processor ref="partitionItemProcessor">
+				<properties>
+					<property name="divide" value="#{jobParameters['divide']}" />
+					<property name="sleep" value="#{jobParameters['sleep']}" />
+				</properties>
+			</processor>
+			<writer ref="partitionItemWriter" />
+		</chunk>
+		<partition>
+			<mapper ref="myPartitionMapper">
+				<properties>
+					<property name="partitions" value="#{jobParameters['partitions']}" />
+				</properties>
+			</mapper>
+			<reducer ref="myPartitionReducer" />
+			<collector ref="myPartitionCollector" />
+			<analyzer ref="myPartitionAnalyzer" />
+		</partition>
+	</step>
+</job>
