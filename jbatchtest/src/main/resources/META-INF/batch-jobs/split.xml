@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="split" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+
+	<split id="split0" next="nextOfSplit">
+
+		<flow id="flow1">
+			<step id="1sec">
+				<batchlet ref="sleepBatchlet">
+					<properties>
+						<property name="sleepInMillis" value="1000" />
+					</properties>
+				</batchlet>
+			</step>
+		</flow>
+
+		<flow id="flow2">
+			<step id="2sec">
+				<batchlet ref="sleepBatchlet">
+					<properties>
+						<property name="sleepInMillis" value="2000" />
+					</properties>
+				</batchlet>
+			</step>
+		</flow>
+
+		<flow id="flow3">
+			<step id="3sec">
+				<batchlet ref="sleepBatchlet">
+					<properties>
+						<property name="sleepInMillis" value="3000" />
+					</properties>
+				</batchlet>
+			</step>
+		</flow>
+
+	</split>
+
+	<step id="nextOfSplit">
+		<batchlet ref="sleepBatchlet"/>
+	</step>
+
+</job>
