@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="chunkretryskip" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+	<step id="doChunk">
+		<listeners>
+			<listener ref="myRetryReadListener" />
+			<listener ref="mySkipReadListener" />
+		</listeners>
+		<chunk item-count="3" retry-limit="3">
+			<reader ref="chunkRetrySkipItemReader">
+				<properties>
+					<property name="failAt" value="#{jobParameters['itemReaderFailAt']}" />
+				</properties>
+			</reader>
+			<processor ref="chunkRetrySkipItemProcessor">
+				<properties>
+					<property name="divide" value="#{jobParameters['divide']}" />
+				</properties>
+			</processor>
+			<writer ref="chunkRetrySkipItemWriter" />
+			<retryable-exception-classes>
+				<include class="java.lang.RuntimeException" />
+			</retryable-exception-classes>
+			<skippable-exception-classes>
+				<include class="java.lang.RuntimeException" />
+			</skippable-exception-classes>
+		</chunk>
+	</step>
+</job>
