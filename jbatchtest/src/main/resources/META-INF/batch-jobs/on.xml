@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="on" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+
+	<step id="step1">
+		<batchlet ref="exitStatusBatchlet">
+			<properties>
+				<property name="exitStatus" value="#{jobParameters['exitStatus']}" />
+			</properties>
+		</batchlet>
+		<next on="NEXT" to="step2" />
+		<fail on="FAIL" exit-status="EARLY COMPLETION (FAILED)" />
+		<end on="END" exit-status="EARLY COMPLETION (END)" />
+		<stop on="STOP" exit-status="EARLY COMPLETION (STOP)" restart="step2" />
+	</step>
+
+	<step id="step2">
+		<batchlet ref="exitStatusBatchlet" />
+	</step>
+
+</job>
