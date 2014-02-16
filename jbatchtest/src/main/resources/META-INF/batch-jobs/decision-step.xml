@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="decision" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+
+	<step id="step1" next="step2">
+		<batchlet ref="nopBatchlet" />
+	</step>
+
+	<step id="step2" next="step2decision">
+		<listeners>
+			<listener ref="mySkipReadListener" />
+		</listeners>
+		<chunk item-count="3">
+			<reader ref="chunkSkipItemReader">
+				<properties>
+					<property name="failAt" value="#{jobParameters['itemReaderFailAt']}" />
+				</properties>
+			</reader>
+			<processor ref="chunkSkipItemProcessor">
+				<properties>
+					<property name="divide" value="#{jobParameters['divide']}" />
+				</properties>
+			</processor>
+			<writer ref="chunkSkipItemWriter" />
+			<skippable-exception-classes>
+				<include class="java.lang.RuntimeException" />
+			</skippable-exception-classes>
+		</chunk>
+	</step>
+
+	<decision id="step2decision" ref="myDecider">
+
+		<next on="SKIP_FOUND" to="step4_SKIP_FOUND" />
+		<next on="*" to="step3_NO_SKIP_FOUND" />
+
+	</decision>
+
+	<step id="step3_NO_SKIP_FOUND">
+		<batchlet ref="nopBatchlet" />
+	</step>
+
+	<step id="step4_SKIP_FOUND">
+		<batchlet ref="nopBatchlet" />
+	</step>
+
+</job>
