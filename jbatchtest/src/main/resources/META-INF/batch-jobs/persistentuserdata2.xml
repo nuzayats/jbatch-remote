@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="persistentuserdata2" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+
+	<step id="getAndSet">
+		<batchlet ref="getAndSetPersistentUserDataBatchlet"/>
+	</step>
+	
+</job>
