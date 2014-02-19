@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="jobdependency-child1" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+	<step id="child1-step1">
+		<batchlet ref="sleepBatchlet">
+			<properties>
+				<property name="sleepInMillis" value="1000" />
+			</properties>
+		</batchlet>
+	</step>
+</job>
