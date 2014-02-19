@@ -3,7 +3,7 @@
 	<step id="child2-step1">
 		<batchlet ref="sleepBatchlet">
 			<properties>
-				<property name="sleepInMillis" value="2000" />
+				<property name="sleepInMillis" value="#{jobParameters['sleepInMillis']}" />
 			</properties>
 		</batchlet>
 	</step>

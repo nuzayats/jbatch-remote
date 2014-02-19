@@ -2,25 +2,34 @@
 <job id="jobdependency" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
 
 	<step id="step1" next="step2">
+		<properties>
+			<property name="sleepInMillis" value="1000" />
+		</properties>
 		<batchlet ref="jobLaunchBatchlet">
 			<properties>
-				<property name="jobXMLName" value="jobdependency-child1"/>
+				<property name="jobXMLName" value="jobdependency-child1" />
 			</properties>
 		</batchlet>
 	</step>
 
 	<step id="step2" next="step3">
+		<properties>
+			<property name="sleepInMillis" value="2000" />
+		</properties>
 		<batchlet ref="jobLaunchBatchlet">
 			<properties>
-				<property name="jobXMLName" value="jobdependency-child2"/>
+				<property name="jobXMLName" value="jobdependency-child2" />
 			</properties>
 		</batchlet>
 	</step>
 
 	<step id="step3">
+		<properties>
+			<property name="sleepInMillis" value="3000" />
+		</properties>
 		<batchlet ref="jobLaunchBatchlet">
 			<properties>
-				<property name="jobXMLName" value="jobdependency-child3"/>
+				<property name="jobXMLName" value="jobdependency-child3" />
 			</properties>
 		</batchlet>
 	</step>

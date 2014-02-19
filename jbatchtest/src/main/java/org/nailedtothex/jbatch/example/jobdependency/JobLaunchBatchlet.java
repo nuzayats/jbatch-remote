@@ -3,7 +3,6 @@ package org.nailedtothex.jbatch.example.jobdependency;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
@@ -26,14 +25,6 @@ public class JobLaunchBatchlet implements Batchlet {
 	private static final long POLLING_WAIT = 1000l;
 	private static final Set<BatchStatus> INCOMPLETE_STATUSES = Collections.unmodifiableSet(EnumSet.of(
 			BatchStatus.STARTED, BatchStatus.STARTING));
-	private static final Set<String> FILTER_PROPERTY_NAMES;
-
-	static {
-		Set<String> set = new HashSet<>();
-		set.add("jobXMLName");
-		set.add("waitForFinish");
-		FILTER_PROPERTY_NAMES = Collections.unmodifiableSet(set);
-	}
 
 	@Inject
 	private StepContext stepContext;
@@ -49,7 +40,7 @@ public class JobLaunchBatchlet implements Batchlet {
 		JobOperator jobOperator = getJobOperator();
 		Serializable persistentUserData = stepContext.getPersistentUserData();
 
-		Properties jobProperties = getFilteredProperties();
+		Properties jobProperties = getStepProperties();
 
 		log.log(Level.FINE, "{0}: persistentUserData={1}, waitForFinish={2}", new Object[] { stepContext.getStepName(),
 				persistentUserData, waitForFinish });
@@ -104,17 +95,8 @@ public class JobLaunchBatchlet implements Batchlet {
 		getJobOperator().stop(executionId);
 	}
 
-	protected Properties getFilteredProperties() {
-		Properties jobProperties = new Properties();
-
-		for (String key : stepContext.getProperties().stringPropertyNames()) {
-			if (FILTER_PROPERTY_NAMES.contains(key)) {
-				continue;
-			}
-			jobProperties.setProperty(key, stepContext.getProperties().getProperty(key));
-		}
-
-		return jobProperties;
+	protected Properties getStepProperties() {
+		return stepContext.getProperties();
 	}
 
 	protected JobExecution waitForFinish(long executionId, JobOperator jobOperator) {
