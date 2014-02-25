@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="jobwideproducer" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+
+	<properties>
+		<property name="baseDate" value="#{jobParameters['baseDate']}" />
+	</properties>
+
+	<step id="step1">
+		<batchlet ref="injectBatchlet" />
+	</step>
+
+</job>
