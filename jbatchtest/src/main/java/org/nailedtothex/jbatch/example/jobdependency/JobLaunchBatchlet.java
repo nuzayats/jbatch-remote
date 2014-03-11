@@ -74,6 +74,10 @@ public class JobLaunchBatchlet implements Batchlet {
 
 			log.log(Level.FINE, "{0}: job finished: BatchStatus={1}", new Object[] { stepContext.getStepName(),
 					jobExecution.getBatchStatus() });
+			
+			if(jobExecution.getBatchStatus() != BatchStatus.COMPLETED){
+			    throw new IllegalStateException(stepContext.getStepName() + ": job failed");
+			}
 		}
 
 		return null;
